@@ -140,7 +140,8 @@ function Index(props) {
           sortedUBN.map((c) => {
             return (
               <>
-                <div className={styles.userCard}>
+                <div 
+                className={styles.userCard}>
                   <h3>{c.name}</h3>
                   <h3>{c.occupation}</h3>
                   <h3>{c.age} years</h3>

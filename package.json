@@ -18,7 +18,7 @@
     "prisma": "^4.10.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5",
+    "react-redux": "^8.0.5"
   },
   "devDependencies": {
     "eslint": "^8.35.0",
