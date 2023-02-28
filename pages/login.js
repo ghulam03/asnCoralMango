@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 
 import { addUser } from "../store/userSlice";
+import styles from "../styles/login.module.css";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 function Login() {
-    useState
-    const [loginFB, setloginFB] = useState("")
-    const dispatch=useDispatch()
-    const router =useRouter()
+    const dispatch = useDispatch();
+    const router = useRouter();
+  const [loginFB, setloginFB] = useState("");
   const [userName, setuserName] = useState("");
   const [password, setpassword] = useState("");
 
-  // async
   function handleSubmit(e) {
-    
     e.preventDefault();
 
     //    const response =await
@@ -28,15 +26,13 @@ function Login() {
       .then((data) => data.json())
       .then((datta) => {
         console.log(datta);
-        if(datta.isAuthenticated){
-            console.log("logged in")
-            router.push('/')
-            dispatch(addUser())
-            
-        }
-        else{
-            console.log("Invalid Credential")
-            setloginFB('Invalid Credential')
+        if (datta.isAuthenticated) {
+          console.log("logged in");
+          router.push("/");
+          dispatch(addUser());
+        } else {
+          console.log("Invalid Credential");
+          setloginFB("Invalid Credential");
         }
       });
 
@@ -45,14 +41,13 @@ function Login() {
   }
   return (
     <>
-      <div>
+      <div className={styles.container}>
         <h2
-        // className={styles.title}
         >
           Login Here!
         </h2>
         <form
-          // className={styles.formcontainer}
+          className={styles.formcontainer}
           onSubmit={handleSubmit}
         >
           <label>User Name</label>

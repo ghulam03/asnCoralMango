@@ -1,0 +1,40 @@
+.container {
+  background-color: var(--login);
+  height: 300px;
+  margin-left: 500px;
+  width: 30%;
+}
+.container h2 {
+  margin-left: 100px;
+}
+.formcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.formcontainer label {
+  padding-left: 120px;
+  height: 30px;
+  width: 80%;
+  margin-left: 30px;
+  background-color: rgba(181, 191, 146, 0.387);
+}
+.formcontainer input {
+  padding-left: 120px;
+  height: 40px;
+  width: 80%;
+  margin-left: 30px;
+  background-color: rgba(181, 191, 146, 0.078);
+}
+
+.formcontainer button {
+  padding-left: 50px;
+  height: 40px;
+  width: 80%;
+  margin-left: 30px;
+
+  background-color: var(--button);
+}
+.formcontainer button:hover {
+  background-color: var(--button-light);
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import prisma from "../prisma/prisma";
 import styles from "../styles/index.module.css";
@@ -7,20 +7,20 @@ import { useSelector } from "react-redux";
 function Index(props) {
   const isAuth = useSelector((state) => state.user.isAuthenticated);
   const [users, setusers] = useState(props.users);
-  
+
   const [isCardView, setisCardView] = useState(true);
-  const [sortedUBN, setsortedUBN] = useState({})
-const [sortedUBA, setsortedUBA] = useState({})
-const [isSorted, setisSorted] = useState(false)
-const [isSortedBN, setisSortedBN] = useState(false)
-const [isSortedBA, setisSortedBA] = useState(false)
+  const [sortedUBN, setsortedUBN] = useState({});
+  const [sortedUBA, setsortedUBA] = useState({});
+  const [isSorted, setisSorted] = useState(false);
+  const [isSortedBN, setisSortedBN] = useState(false);
+  const [isSortedBA, setisSortedBA] = useState(false);
 
   const [serachV, setserachV] = useState("");
   const [searchedPeople, setsearchedPeople] = useState({});
-  const [showSP, setshowSP] = useState(false);
+  const [isSearched, setisSearched] = useState(false);
 
   function sortByName() {
-    console.log(users, "us");
+    // console.log(users, "us");
     const sortedUsers = users.sort((a, b) => {
       const nameA = a.name.toUpperCase(); // ignore upper and lowercase
       const nameB = b.name.toUpperCase(); // ignore upper and lowercase
@@ -34,10 +34,11 @@ const [isSortedBA, setisSortedBA] = useState(false)
       // names must be equal
       return 0;
     });
-    setsortedUBN(sortedUsers)
-    setisSortedBN(true)
-    setisSortedBA(false)
-    setisSorted(true)
+    setsortedUBN(sortedUsers);
+    setisSortedBN(true);
+    setisSortedBA(false);
+    setisSorted(true);
+    setisSearched(false)
     // setusers(sortedUsers);
     console.log(sortedUsers, sortedUBN, "srt");
   }
@@ -56,14 +57,15 @@ const [isSortedBA, setisSortedBA] = useState(false)
 
       return 0;
     });
-    setsortedUBA(sortedUsers)
-    setisSortedBA(true)
-    setisSortedBN(false)
-    setisSorted(true)
+    setsortedUBA(sortedUsers);
+    setisSortedBA(true);
+    setisSortedBN(false);
+    setisSorted(true);
+    setisSearched(false)
     // setusers(sortedUsers);
     console.log(sortedUsers, users, "srt");
   }
-  
+
   function search(e) {
     setserachV(e.target.value);
     console.log(serachV);
@@ -71,127 +73,155 @@ const [isSortedBA, setisSortedBA] = useState(false)
     // console.log(persons);
     setsearchedPeople(persons);
     if (persons) {
-      setshowSP(true)
-      setisSorted(true);
+      setisSearched(true);
+      // setisSorted(false);
     } else {
-      setshowSP(false);
-      setisSorted(false);
+      setisSearched(false);
+      // setisSorted(false);
     }
 
-    console.log(searchedPeople, showSP, "sePeople");
+    console.log(searchedPeople, isSearched, "sePeople");
   }
-
-  useEffect(() => {
-    console.log(users, "running useEffect");
-
-    return () => {
-      console.log("ret running");
-    };
-  }, [users]);
-
 
   return (
     <>
-      {!isAuth && <h3>Login to see details...</h3>}
-      {isAuth && isCardView && (
-        <button onClick={() => setisCardView(false)}>Show Table View</button>
-      )}
-      {isAuth && !isCardView && (
-        <button onClick={() => {
+      <div className={styles.container}>
+        {!isAuth && <h3>Login to see details...</h3>}
+        {isAuth && isCardView && (
+          <button
+            onClick={() => {
+              setisCardView(false);
+              setisSorted(false);
+              setisSearched(false)
+            }}
+          >
+            Show Table View
+          </button>
+        )}
+        {isAuth && !isCardView && (
+          <button
+            onClick={() => {
+              setisCardView(true);
+              setisSorted(false);
+              setisSearched(false)
 
-          setisCardView(true)
-          setisSorted(false)
-        }
-      }>Show Card View</button>
-      )}
-      {isAuth && isCardView && (
-        <>
-          <button onClick={sortByAge}>Sort By Age</button>
-          <button onClick={sortByName}>Sort By Name</button>
-          <input type="text"  placeholder="search" value={serachV} onChange={search}></input>
-        </>
-      )}
-      {showSP && (
-        <>
-          <div className={styles.userCard}>
-            <h3>{searchedPeople.name}</h3>
-            <h3>{searchedPeople.occupation}</h3>
-            <h3>{searchedPeople.age}</h3>
-          </div>
-        </>
-      )}
-  {isAuth && isSortedBN &&
-        // props.
-        sortedUBN.map((c) => {
-          return (
-            <>
-              <div className={styles.userCard}>
-                <h3>{c.name}</h3>
-                <h3>{c.occupation}</h3>
-                <h3>{c.age} years</h3>
-              </div>
-            </>
-          );
-        })}
-          {isAuth && isSortedBA &&
-        // props.
-        sortedUBA.map((c) => {
-          return (
-            <>
-              <div className={styles.userCard}>
-                <h3>{c.name}</h3>
-                <h3>{c.occupation}</h3>
-                <h3>{c.age} years</h3>
-              </div>
-            </>
-          );
-        })}
-      
-      {/* //for card view */}
-      
-      {isAuth &&
-        isCardView && !isSorted && 
-        // props.
-        users.map((c) => {
-          return (
-            <>
-              <div className={styles.userCard}>
-                <h3>{c.name}</h3>
-                <h3>{c.occupation}</h3>
-                <h3>{c.age} years</h3>
-              </div>
-            </>
-          );
-        })}
-        
-      {/* //for table view */}
-      {isAuth && !isCardView && (
-        <>
-          <tr>
-            <td>Name</td>
-            <td>Occupation</td>
-            <td>Age</td>
-          </tr>
-          <br />
-        </>
-      )}
-      {isAuth &&
-        !isCardView &&
-        // props.
-        users.map((c) => {
-          return (
-            <>
-              <div className={styles.userCard}>
-                <table>
+            }}
+          >
+            Show Card View
+          </button>
+        )}
+        {isAuth && isCardView && (
+          <>
+            <button onClick={sortByAge}>Sort By Age</button>
+            <button onClick={sortByName}>Sort By Name</button>
+            <input
+              type="text"
+              placeholder="search"
+              value={serachV}
+              onChange={search}
+            ></input>
+          </>
+        )}
+        {isSearched && (
+          <>
+            <div className={styles.userCard}>
+              <h3>{searchedPeople.name}</h3>
+              <h3>{searchedPeople.occupation}</h3>
+              <h3>{searchedPeople.age}</h3>
+            </div>
+          </>
+        )}
+
+        {/* //for sorted user by name */}
+        {isAuth &&
+          isSorted &&
+          isSortedBN &&
+          !isSearched &&
+          // props.
+          sortedUBN.map((c) => {
+            return (
+              <>
+                <div className={styles.userCard}>
+                  <h3>{c.name}</h3>
+                  <h3>{c.occupation}</h3>
+                  <h3>{c.age} years</h3>
+                </div>
+              </>
+            );
+          })}
+
+        {/* //for sorted user by age */}
+        {isAuth &&
+          isSorted &&
+          isSortedBA &&
+          !isSearched &&
+          // props.
+          sortedUBA.map((c) => {
+            return (
+              <>
+                <div className={styles.userCard}>
+                  <h3>{c.name}</h3>
+                  <h3>{c.occupation}</h3>
+                  <h3>{c.age} years</h3>
+                </div>
+              </>
+            );
+          })}
+
+        {/* //for card view */}
+
+        {isAuth &&
+          isCardView &&
+          !isSorted &&
+          !isSearched &&
+          // props.
+          users.map((c) => {
+            return (
+              <>
+                <div className={styles.userCard}>
+                  <h3>{c.name}</h3>
+                  <h3>{c.occupation}</h3>
+                  <h3>{c.age} years</h3>
+                </div>
+              </>
+            );
+          })}
+
+        {/* //for table view */}
+        {isAuth && !isCardView && 
+        !isSearched &&
+        (
+          <>
+            <div className={styles.tableViewH}>
+              <tr>
+                <td>Name</td>
+                <td>Occupation</td>
+                <td>Age</td>
+              </tr>
+              <br />
+            </div>
+          </>
+        )}
+        {isAuth &&
+          !isCardView &&
+          !isSearched &&
+          // props.
+          users.map((c) => {
+            return (
+              <>
+                <div className={styles.tableView}>
+                  {/* <table> */}
                   <tr>
                     <td>{c.name}</td>
-                    <td>{c.occupation}</td> <td>{c.age} </td>
+                    <td>{c.occupation}</td>
+                    <td>{c.age} </td>
                   </tr>
-                </table>
-              </div>
-            </>
-          );
-        })}
+                  {/* </table> */}
+                </div>
+              </>
+            );
+          })}
+      </div>
     </>
   );
 }

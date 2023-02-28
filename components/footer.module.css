@@ -2,7 +2,13 @@
     background-color: var(--header-color);
     height:200px;
     display:flex;
-    flex-direction: row;
-    justify-content: end;
+    flex-direction: column;
+    justify-content: flex-start;
 
+}
+.container h1{
+    margin-left: 500px;
+}
+.container p{
+    margin-left: 200px;
 }
