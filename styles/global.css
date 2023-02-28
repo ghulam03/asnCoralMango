@@ -4,11 +4,15 @@
 
 body {
   background-color: var(--primary-color-light);
+  --header-color:rgba(133, 182, 185, 0.908);
   --primary-color-light: rgba(133, 182, 185, 0.188);
   --user-card-color:rgba(157, 141, 141, 0.469);
   --animal:rgba(83, 88, 94, 0.252);
   --plant:rgba(208, 231, 198, 0.679);
   --about: rgba(177, 133, 185, 0.296);
+  --button:rgba(176, 178, 142, 0.726);
+  --button-light:rgba(185, 166, 133, 0.829);
+  --navbar:rgba(154, 133, 185, 0.646);
   color: #512e2e;
 
   font-family: "Roboto", sans-serif;

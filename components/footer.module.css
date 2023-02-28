@@ -1,0 +1,8 @@
+.container{
+    background-color: var(--header-color);
+    height:200px;
+    display:flex;
+    flex-direction: row;
+    justify-content: end;
+
+}
