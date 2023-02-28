@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 
 function Login() {
+    useState
+    const [loginFB, setloginFB] = useState("")
     const dispatch=useDispatch()
     const router =useRouter()
   const [userName, setuserName] = useState("");
@@ -12,6 +14,7 @@ function Login() {
 
   // async
   function handleSubmit(e) {
+    
     e.preventDefault();
 
     //    const response =await
@@ -27,12 +30,13 @@ function Login() {
         console.log(datta);
         if(datta.isAuthenticated){
             console.log("logged in")
-            router.push('/animal')
+            router.push('/')
             dispatch(addUser())
             
         }
         else{
             console.log("Invalid Credential")
+            setloginFB('Invalid Credential')
         }
       });
 
@@ -67,6 +71,7 @@ function Login() {
             onChange={(e) => setpassword(e.target.value)}
           ></input>
           <button>Login</button>
+          <p>{loginFB}</p>
         </form>
       </div>
     </>

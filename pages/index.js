@@ -2,22 +2,57 @@ import React, { useState } from "react";
 
 import prisma from "../prisma/prisma";
 import styles from "../styles/index.module.css";
+import { useSelector } from "react-redux";
 
 function Index(props) {
-  console.log(props);
+  const [users, setusers] = useState(props.users);
+  function sortByName(){
+    console.log(users ,"us")
+    const sortedUsers=
+    // users.sort()
+    users.sort((a, b) => {
+      const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+    
+      // names must be equal
+      return 0;
+    });
+    console.log(sortedUsers ,"srt")
+    setusers(sortedUsers)
+  }
+
+  const isAuth = useSelector((state) => state.user.isAuthenticated);
   const [isCardView, setisCardView] = useState(true);
+
+  console.log(props);
   return (
     <>
-      {isCardView && (
+      {!isAuth && <h3>Login to see details...</h3>}
+      {isAuth && isCardView && (
         <button onClick={() => setisCardView(false)}>Show Table View</button>
       )}
-
-      {!isCardView && (
+      {isAuth && !isCardView && (
         <button onClick={() => setisCardView(true)}>Show Card View</button>
       )}
-
-      {isCardView &&
-        props.users.map((c) => {
+      {/* {isAuth && (<button>Sort By Name</button>)}
+        {isAuth && (<button>Sort By Age</button>)} */}
+      {isAuth && (
+        <>
+          <button>Sort By Age</button>
+          <button onClick={sortByName}>Sort By Name</button>
+        </>
+      )}
+      //for card view
+      {isAuth &&
+        isCardView &&
+        // props.
+        users.map((c) => {
           return (
             <>
               <div className={styles.userCard}>
@@ -28,7 +63,8 @@ function Index(props) {
             </>
           );
         })}
-      {!isCardView && (
+      //for table view
+      {isAuth && !isCardView && (
         <>
           <tr>
             <td>Name</td>
@@ -38,8 +74,10 @@ function Index(props) {
           <br />
         </>
       )}
-      {!isCardView &&
-        props.users.map((c) => {
+      {isAuth &&
+        !isCardView &&
+        // props.
+        users.map((c) => {
           return (
             <>
               <div className={styles.userCard}>
@@ -53,9 +91,6 @@ function Index(props) {
                     <td>{c.occupation}</td> <td>{c.age} </td>
                   </tr>
                 </table>
-                {/* <h3>{c.name}</h3>
-                <h3>{c.occupation}</h3>
-                <h3>{c.age} years</h3> */}
               </div>
             </>
           );
@@ -63,32 +98,6 @@ function Index(props) {
     </>
   );
 }
-// if(showCardView){
-
-// {props.users.map((c)=>{
-//         return (
-//             <><div className={styles.userCard}>
-
-//             <h3>{c.name}</h3>
-//             <h3>{c.occupation}</h3>
-//             <h3>{c.age} years</h3>
-//             </div>
-
-//             </>
-//         )
-//     })
-
-// }
-// {
-  /* <h1>Index</h1>
-    <label className={styles.toogle}>
-  <input type="checkbox"/>
-  <span className={styles.slider}></span>
-</label> */
-// }
-// </>
-// )
-// }
 
 export default Index;
 
