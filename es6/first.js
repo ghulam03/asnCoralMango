@@ -2,6 +2,9 @@
 
 // const result1 = a.<your code here>
 
+
+//solution
+
 const array = [1, 3, 5, 2, 4] 
 const evenIndexElements = array.filter((num, index) => index % 2 == 0);
 console.log(evenIndexElements);

@@ -3,7 +3,6 @@ export default async function handle(req, res) {
     const { userName, password } = req.body;
     let data = {};
     if (userName === "demo@coralmango.com" && password === "demo123") {
-      // const
       data = {
         isAuthenticated: true,
       };

@@ -3,6 +3,8 @@
 // const result2 = a.<your code here>
 
 
+//solution
+
 const array = [1, 3, 5, 2, 4] 
 const resultArray=array.map((i)=>i*i)
 console.log(resultArray);
