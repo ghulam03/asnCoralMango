@@ -18,20 +18,4 @@ export default async function handle(req, res) {
   }
 }
 
-// res.redirect(307, '/')
-// }
-// const result = await prisma.user.create({
-//   data: {
-//     id,
-//     name: name,
-//     email: email,
-//     password:password,
-//     age: age,
-//     country: country
-//   },
-// });
 
-// res.status(200).json({ aname, aage });
-//   }
-
-// }

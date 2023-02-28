@@ -8,16 +8,16 @@ function Index(props) {
   const isAuth = useSelector((state) => state.user.isAuthenticated);
   const [users, setusers] = useState(props.users);
 
+  const [isSorted, setisSorted] = useState(false);
+  const [isSearched, setisSearched] = useState(false);
   const [isCardView, setisCardView] = useState(true);
   const [sortedUBN, setsortedUBN] = useState({});
   const [sortedUBA, setsortedUBA] = useState({});
-  const [isSorted, setisSorted] = useState(false);
+  const [searchedPeople, setsearchedPeople] = useState({});
+  const [serachV, setserachV] = useState("");
   const [isSortedBN, setisSortedBN] = useState(false);
   const [isSortedBA, setisSortedBA] = useState(false);
 
-  const [serachV, setserachV] = useState("");
-  const [searchedPeople, setsearchedPeople] = useState({});
-  const [isSearched, setisSearched] = useState(false);
 
   function sortByName() {
     // console.log(users, "us");
@@ -35,10 +35,10 @@ function Index(props) {
       return 0;
     });
     setsortedUBN(sortedUsers);
-    setisSortedBN(true);
-    setisSortedBA(false);
     setisSorted(true);
     setisSearched(false)
+    setisSortedBN(true);
+    setisSortedBA(false);
     // setusers(sortedUsers);
     console.log(sortedUsers, sortedUBN, "srt");
   }
@@ -58,10 +58,10 @@ function Index(props) {
       return 0;
     });
     setsortedUBA(sortedUsers);
-    setisSortedBA(true);
-    setisSortedBN(false);
     setisSorted(true);
     setisSearched(false)
+    setisSortedBA(true);
+    setisSortedBN(false);
     // setusers(sortedUsers);
     console.log(sortedUsers, users, "srt");
   }
@@ -70,7 +70,6 @@ function Index(props) {
     setserachV(e.target.value);
     console.log(serachV);
     const persons = users.find((person) => person.name === serachV);
-    // console.log(persons);
     setsearchedPeople(persons);
     if (persons) {
       setisSearched(true);
@@ -135,8 +134,8 @@ function Index(props) {
         {/* //for sorted user by name */}
         {isAuth &&
           isSorted &&
-          isSortedBN &&
           !isSearched &&
+          isSortedBN &&
           // props.
           sortedUBN.map((c) => {
             return (
@@ -153,8 +152,8 @@ function Index(props) {
         {/* //for sorted user by age */}
         {isAuth &&
           isSorted &&
-          isSortedBA &&
           !isSearched &&
+          isSortedBA &&
           // props.
           sortedUBA.map((c) => {
             return (
@@ -188,7 +187,8 @@ function Index(props) {
           })}
 
         {/* //for table view */}
-        {isAuth && !isCardView && 
+        {isAuth && 
+        !isCardView && 
         !isSearched &&
         (
           <>
