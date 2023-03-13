@@ -11,7 +11,7 @@ export default async function handle(req, res) {
         isAuthenticated: false,
       };
     }
-    console.log(data)
+    console.log("user login status",data )
 
     res.json(data);
   }
